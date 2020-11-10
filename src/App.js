@@ -11,6 +11,8 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
+    this.markTodoAsComplete = this.markTodoAsComplete.bind(this);
+    this.unmarkTodoAsComplete = this.unmarkTodoAsComplete.bind(this);
   }
   handleChange(event) {
     this.setState({ value: event.target.value });
@@ -31,11 +33,28 @@ class App extends React.Component {
     todos.splice(id, 1);
     this.setState({ todos: todos });
   }
+  markTodoAsComplete(todo) {
+    const id = this.state.todos.indexOf(todo);
+    const todos = this.state.todos;
+    todos.splice(id, 1, { ...todo, completed: true });
+    this.setState({ todos: todos });
+  }
+  unmarkTodoAsComplete(todo) {
+    const id = this.state.todos.indexOf(todo);
+    const todos = this.state.todos;
+    todos.splice(id, 1, { ...todo, completed: false });
+    this.setState({ todos: todos });
+  }
   render() {
     const todos = this.state.todos.map((todo) => (
       <li key={todo.id}>
         {todo.name}
         <span onClick={() => this.deleteTodo(todo)}>&times;</span>
+        {todo.completed ? (
+          <span onClick={() => this.unmarkTodoAsComplete(todo)}>&#9745;</span>
+        ) : (
+          <span onClick={() => this.markTodoAsComplete(todo)}>&#9744;</span>
+        )}
       </li>
     ));
     return (
