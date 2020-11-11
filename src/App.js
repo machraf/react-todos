@@ -1,6 +1,7 @@
 import React from "react";
 // import logo from "./logo.svg";
 import "./App.css";
+import Todo from "./Todo";
 
 class App extends React.Component {
   constructor(props) {
@@ -47,15 +48,27 @@ class App extends React.Component {
   }
   render() {
     const todos = this.state.todos.map((todo) => (
-      <li key={todo.id}>
-        {todo.name}
-        <span onClick={() => this.deleteTodo(todo)}>&times;</span>
+      <div className="todo">
+        <Todo todo={todo} />
+        <button onClick={() => this.deleteTodo(todo)} className="btn delete">
+          &times;
+        </button>
         {todo.completed ? (
-          <span onClick={() => this.unmarkTodoAsComplete(todo)}>&#9745;</span>
+          <button
+            onClick={() => this.unmarkTodoAsComplete(todo)}
+            className="btn mark"
+          >
+            &#9745;
+          </button>
         ) : (
-          <span onClick={() => this.markTodoAsComplete(todo)}>&#9744;</span>
+          <button
+            onClick={() => this.markTodoAsComplete(todo)}
+            className="btn mark"
+          >
+            &#9744;
+          </button>
         )}
-      </li>
+      </div>
     ));
     return (
       <div className="App">
